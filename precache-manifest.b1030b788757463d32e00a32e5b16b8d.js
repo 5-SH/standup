@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6cc92c445a4ae5700361e63ac3ba7707",
+    "revision": "0eca3e28fc27612dff7210b2fa241973",
     "url": "/standup/index.html"
   },
   {
-    "revision": "dd06f6a46057222d4288",
+    "revision": "636ea5879738f0994605",
     "url": "/standup/static/css/main.29b323e3.chunk.css"
   },
   {
@@ -16,15 +16,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/standup/static/js/2.22d907cf.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "dd06f6a46057222d4288",
-    "url": "/standup/static/js/main.5f690906.chunk.js"
+    "revision": "636ea5879738f0994605",
+    "url": "/standup/static/js/main.f823632e.chunk.js"
   },
   {
     "revision": "711f815db4926eb79335",
     "url": "/standup/static/js/runtime-main.28a9c96e.js"
   },
   {
-    "revision": "5d5d9eefa31e5e13a6610d9fa7a283bb",
-    "url": "/standup/static/media/logo.5d5d9eef.svg"
+    "revision": "190ee485423e0076f45dc46c1dc98397",
+    "url": "/standup/static/media/stand_up_logo.190ee485.png"
   }
 ]);
