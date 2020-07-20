@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './img/stand_up_logo.png';
 import './App.css';
-import Editor from './Editor'
+import Editor from './Editor';
+import config from './config';
 
 class App extends Component {
   constructor(){
