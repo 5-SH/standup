@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import logo from './img/stand_up_logo.png';
 import './App.css';
 import Editor from './Editor';
-import config from './config';
+
+// import config from './config';
+// console.log(config);
+
 
 class App extends Component {
   constructor(){
