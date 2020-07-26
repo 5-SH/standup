@@ -1,4 +1,4 @@
-import Article from '../Article';
+import Article from './Article';
 
 var article1 = Article();
 

@@ -4,6 +4,7 @@ import './App.css';
 import Editor from './Editor';
 import FirebaseDao from './FirebaseDao'
 import config from './config';
+import Card from './Card'
 
 class App extends Component {
   constructor(){
@@ -13,7 +14,7 @@ class App extends Component {
     this.getArticles = this.getArticles.bind(this);
     this.state = {
       articles: []
-    }
+    };
   }
   submit(article){
     if (article) {
@@ -26,7 +27,6 @@ class App extends Component {
           dataSnapshots.forEach(dataSnapshot => {
             let item = dataSnapshot.val();
             item['key'] = dataSnapshot.key;
-            console.log(dataSnapshot.val());
             items.push(item);
             
           });
@@ -57,7 +57,6 @@ class App extends Component {
       dataSnapshots.forEach(dataSnapshot => {
         let item = dataSnapshot.val();
         item['key'] = dataSnapshot.key;
-        console.log(dataSnapshot.val());
         items.push(item);
         
       });
@@ -78,9 +77,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </div>
         <Editor submit={ this.submit } isAnonymous={ this.isAnonymous }/>
-        <ul>
-          { this.getArticles() }
-        </ul>
+        <Card cardInfo={ this.cardInfo } />
       </div>
     );
   }

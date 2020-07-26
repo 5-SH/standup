@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './Editor.css';
 import Profile from './Profile';
-import Article from './Article'
+import getEmbedly from './Embedly';
+import Card from './Card';
 
 class Editor extends Component {
   constructor(props) {
@@ -12,33 +13,84 @@ class Editor extends Component {
     this.getCard = this.getCard.bind(this);
     this.hasValue = this.hasValue.bind(this);
     this.detectURL = this.detectURL.bind(this);
+    this.getArticle = this.getArticle.bind(this);
+    this.getForcedState = this.getForcedState.bind(this);
     this.state = {
       embedlyUrl: undefined,
       content: undefined
     };
   }
+  getForcedState(embedlyUrl, content) {
+    return new Promise(resolve => {
+      if (embedlyUrl) {
+        getEmbedly(embedlyUrl).then(response => {
+          let cardInfo = Object.assign({}, response.data);
+
+          resolve({
+            embedlyUrl,
+            content,
+            cardInfo
+          });
+        }).catch(error => {
+          resolve({
+            embedlyUrl: undefined,
+            content: undefined,
+            cardInfo: undefined
+          });
+        });
+      } 
+      // else {
+      //   resolve({
+      //     content: content
+      //   })
+      // }
+    })
+  }
   handleSubmit(event){
-    let article = Object.assign({}, Article());
-    article.user = "Genji";
-    article.content = this.state.content;
-    article.urls[0].url = this.state.embedlyUrl;
-    this.props.submit(article);
+    if (this.hasValue(this.state.content)) {
+      event.preventDefault();
+      this.props.submit(this.getArticle());
+      this.setState({
+        embedlyUrl : undefined,
+        content : undefined,
+        cardInfo : undefined
+      });
+    }
+
   }
   onPaste(event) {
+    const content = event.currentTarget.textContent;
     event.clipboardData.items[0].getAsString(text => {
-      if (this.detectURL(text)) {
-        this.setState({ embedlyUrl: text})
+      const checkText = this.detectURL(text);
+      if (checkText) {
+        this.getForcedState(checkText, content + text).then(obj => {
+          this.setState(obj)
+        })
       }
     })
   }
   editorChange(event) {
     let checkText = this.detectURL(event.currentTarget.textContent);
 
-    if (!this.state.embedlyUrl && (event.keyCode === 32 || event.keyCode === 13) && checkText) {
-      this.setState({ embedlyUrl: checkText, content:event.currentTarget.textContent });
-    } else {
-      this.setState({ content: event.currentTarget.textContent });
+    if (!this.state.embedlyUrl && (event.keyCode === 32 
+      || event.keyCode === 13) && checkText) {
+        
+      this.getForcedState(checkText, event.currentTarget.textContent)
+        .then(obj => this.setState(obj))
+    } 
+    // else {
+    //   this.getForcedState(undefined, event.currentTarget.textContent)
+    //     .then(obj => this.setState(obj))
+    // }
+  }
+  getArticle(){
+    let article = {};
+    article.user = "Genji";
+    article.content = this.state.content;
+    if (this.state.embedlyUrl) {
+      article.cardInfo = this.state.cardInfo;
     }
+    return article;
   }
   detectURL(text) {
     const urls = text.match(/(https?:\/\/[^\s]+)/g) || text.match(/(www.[^\s]+)/g);
@@ -70,12 +122,14 @@ class Editor extends Component {
             contentEditable="true" 
             placeholder="글쓰기..." 
             onPaste={ this.onPaste } 
-            onKeyUp={ this.editorChange }></div>
-            { this.getCard(this.state.embedlyUrl) }
+            onKeyUp={ this.editorChange }
+            dangerouslySetInnerHTML={{__html: this.state.content}}></div>
+            
+            <Card cardInfo={ this.state.cardInfo } />
         </div>
         <div className="actionBar">
           <button className="upload" 
-            disabled={ !this.hasValue(this.state.content) }
+            // disabled={ !this.hasValue(this.state.content) }
             onClick={this.handleSubmit }>
             <span>스탠드업!</span>
           </button>
