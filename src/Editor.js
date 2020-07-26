@@ -31,7 +31,7 @@ class Editor extends Component {
             content,
             cardInfo
           });
-        }).catch(error => {
+        }).catch(e => {
           resolve({
             embedlyUrl: undefined,
             content: undefined,
