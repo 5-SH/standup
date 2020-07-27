@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+/* global firebaseui, firebase */
 
 export default class FirebaseDao {
   constructor(config) {
@@ -9,8 +9,13 @@ export default class FirebaseDao {
   }
   update(key, postData) {
     let updates = {};
+    
+    
     updates['/posts/' + key] = postData;
     updates['/user-posts/genji/' + key] = postData;
+    
+    console.log('updates', updates);
+    
     return firebase.database().ref().update(updates);
   }
   remove(key) {
@@ -28,5 +33,8 @@ export default class FirebaseDao {
   }
   getArticle(key) {
     return firebase.database().ref('/posts/' + key);
+  }
+  getUI() {
+    return new firebaseui.auth.AuthUI(firebase.auth());
   }
 }
