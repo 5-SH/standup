@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom';
 import logo from './img/stand_up_logo.png';
 import './Home.css';
 import Editor from './Editor';
-import Card from './Card'
+import CardList from './CardList'
 
 class Home extends Component {
   constructor(){
@@ -26,7 +26,7 @@ class Home extends Component {
           </Link>
         </div>
         <Editor submit={ this.submit }/>
-        <Card cardInfo={ this.cardInfo } />
+        <CardList cardInfo={ this.cardInfo } />
       </div>
     );
   }
