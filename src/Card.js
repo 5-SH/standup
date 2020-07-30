@@ -8,7 +8,13 @@ export default class Card extends Component {
       return (
         <a className="card" href={cardInfo.url} target="_blank">
           <div className="card_image">
-            <img src={ cardInfo.links.thumbnail[0].href } alt={ cardInfo.meta.title } className="width100 card_img" />
+            { 
+              cardInfo.links.thumbnail !== undefined 
+              && <img src={ cardInfo.links.thumbnail[0].href } 
+                    alt={ cardInfo.meta.title } 
+                    className="width100 card_img" />
+            }
+            
           </div>
           <div className="borderTop">
           <div className="card_text">
