@@ -38,7 +38,7 @@ export function loadArticles() {
 }
 export function updateArticle(postData){
   return (dispatch) => {
-    dao.update(dao.newKey(),postData);
+    dao.update(dao.newKey(), postData);
   };
 }
 export function groupArticles(articles) {

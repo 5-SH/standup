@@ -30,11 +30,14 @@ class Login extends Component {
   }
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    id: ownProps.params.id,
-    filter: ownProps.location.query.filter
-  };
-}
+// function mapStateToProps(state, ownProps) {
+//   console.log(ownProps);
 
-export default connect(mapStateToProps)(Login);
+//   return {
+//     id: ownProps.params.id,
+//     filter: ownProps.location.query.filter
+//   };
+// }
+
+// export default connect(mapStateToProps)(Login);
+export default Login;

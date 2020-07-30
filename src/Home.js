@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 import logo from './img/stand_up_logo.png';
 import './Home.css';
 import Editor from './Editor';
 import CardList from './CardList'
+import { updateArticle } from './actions/Article'
 
 class Home extends Component {
   constructor(){
@@ -32,4 +34,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect()(Home);

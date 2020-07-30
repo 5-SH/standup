@@ -39,11 +39,11 @@ class Editor extends Component {
           });
         });
       } 
-      // else {
-      //   resolve({
-      //     content: content
-      //   })
-      // }
+      else {
+        resolve({
+          content: content
+        })
+      }
     })
   }
   handleSubmit(event){
@@ -84,12 +84,20 @@ class Editor extends Component {
     // }
   }
   getArticle(){
-    let article = {};
-    article.user = "Genji";
+    const article = {};
+    const user = firebase.auth().currentUser;
+
+    // console.log('user', user);
+    article.user = {
+        email : user.email,
+        displayName : user.displayName,
+        uid : user.uid
+    };
     article.content = this.state.content;
     if (this.state.embedlyUrl) {
       article.cardInfo = this.state.cardInfo;
     }
+
     return article;
   }
   detectURL(text) {
@@ -115,26 +123,28 @@ class Editor extends Component {
   render() {
     return (
       <div className="wrapEditor">
-        <Profile isAnonymous={this.props.isAnonymous}/>
+        <div className="editor_header">
+          <div className="today_title">
+            무엇을 공유할까요?
+          </div>
+          <Profile/>
+        </div>
         <div className="textEditor">
-          <div 
-            className="innerEdit" 
-            contentEditable="true" 
-            placeholder="글쓰기..." 
-            onPaste={ this.onPaste } 
-            onKeyUp={ this.editorChange }
+          <div className="innerEdit"
+            contentEditable="true"
+            placeholder="글쓰기..."
+            onPaste={this.onPaste}
+            onKeyUp={this.editorChange}
             dangerouslySetInnerHTML={{__html: this.state.content}}></div>
-            
-            <Card cardInfo={ this.state.cardInfo } />
+            <Card cardInfo={this.state.cardInfo}/>
         </div>
         <div className="actionBar">
-          <button className="upload" 
-            // disabled={ !this.hasValue(this.state.content) }
-            onClick={this.handleSubmit }>
-            <span>스탠드업!</span>
-          </button>
+          <button className="upload"
+            disabled={!this.hasValue(this.state.content)}
+            onClick={this.handleSubmit}><span>스탠드업!</span></button>
         </div>
       </div>
+
     )
   }
 }
