@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import './Profile.css';
 import PopCard from './PopCard';
 import { Link } from 'react-router-dom';
@@ -14,6 +15,7 @@ class Profile extends Component {
   }
   componentWillMount() {
     firebase.auth().onAuthStateChanged(user => {
+      console.log('user', user);
       if (user) {
         this.setState({ user: user });
       } else {
@@ -33,15 +35,16 @@ class Profile extends Component {
           <div className="profile_name">
             <a href="#" onClick={ () => this.popProfile() }>{ user.displayName }</a>
           </div>
+          
           <div className="profile_img_wrap">
-              <img src={ user.photoURL } alt="profiles" className="profile_img"/>
-            </div>
-            <PopCard isPop={ this.state.isPop }/>
+            <img src={ user.photoURL } alt="profiles" className="profile_img"/>
+          </div>
+          
+          <PopCard isPop={ this.state.isPop }/>
         </span>
       )
     } else {
-      // return (<div className="profile_name"><Link to="/login">로그인</Link></div>)
-      return <Login />
+      return (<div className="profile_name"><Login /></div>)
     }
   }
   

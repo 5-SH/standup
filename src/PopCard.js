@@ -1,4 +1,4 @@
-/*global firebase*/
+import firebase from 'firebase';
 import React ,{Component} from 'react';
 import './PopCard.css';
 import { userArticles, loadArticles } from './actions/Article';

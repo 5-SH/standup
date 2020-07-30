@@ -15,8 +15,7 @@ export default function App() {
     <Provider store={ store }>
       <Router>
         <Switch>
-          <Route exact path="/standup"><Home /></Route>
-          <Route exact path="/login"><Login /></Route>
+          <Route exact path="/"><Home /></Route>
           <Route><NotFound /></Route>
         </Switch>
       </Router>

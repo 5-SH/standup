@@ -1,4 +1,5 @@
-/*global firebaseui,firebase*/
+import firebase from 'firebase';
+import firebaseui from 'firebaseui';
 import {USER, GROUP} from '../constants'
 
 export default function getArticles(state, action){

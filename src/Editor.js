@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Editor.css';
+import firebase from 'firebase';
 import Profile from './Profile';
 import getEmbedly from './Embedly';
 import Card from './Card';

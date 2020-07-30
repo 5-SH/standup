@@ -1,6 +1,6 @@
-/*global firebaseui,firebase*/
-
 import React, { Component } from 'react';
+import firebase from 'firebase';
+import firebaseui from 'firebaseui';
 import FirebaseDao from './FirebaseDao';
 import config from './config';
 import { connect } from 'react-redux';
@@ -18,6 +18,7 @@ class Login extends Component {
         firebase.auth.GoogleAuthProvider.PROVIDER_ID
       ]
     };
+
     this.ui.start('#firebaseui-auth', uiConfig);
   }
   componentWillUnmount() {
@@ -25,7 +26,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div id='firebaseui-auth'></div>
+        <div id='firebaseui-auth'></div>
     );
   }
 };

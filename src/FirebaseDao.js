@@ -1,4 +1,5 @@
-/* global firebaseui, firebase */
+import firebase from 'firebase';
+var firebaseui = require('firebaseui');
 
 export default class FirebaseDao {
   constructor(config) {
@@ -55,7 +56,7 @@ export default class FirebaseDao {
     });
   }
   getUI() {
-    return new firebaseui.auth.AuthUI(firebase.auth());
+      return firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth());
   }
   
   logout(){
