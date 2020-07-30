@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Profile.css';
 import PopCard from './PopCard';
 import { Link } from 'react-router-dom';
+import Login from './Login';
 
 class Profile extends Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class Profile extends Component {
         </span>
       )
     } else {
-      return (<div className="profile_name"><Link to="/login">로그인</Link></div>)
+      // return (<div className="profile_name"><Link to="/login">로그인</Link></div>)
+      return <Login />
     }
   }
   
