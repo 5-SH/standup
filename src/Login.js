@@ -13,7 +13,7 @@ class Login extends Component {
 
   componentDidMount() {
     const uiConfig = {
-      'signInSuccessUrl': window.location.origin,
+      'signInSuccessUrl': window.location.origin + '/standup',
       'signInOptions': [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID
       ]
