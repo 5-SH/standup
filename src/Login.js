@@ -9,11 +9,23 @@ class Login extends Component {
   constructor (props) {
     super(props);
     this.ui = (new FirebaseDao(config)).getUI();
+    this.dao = new FirebaseDao(config);
   }
 
   componentDidMount() {
     const uiConfig = {
-      'signInSuccessUrl': window.location.origin + '/standup',
+      callbacks: {
+        'signInSuccess': (currentUser)=> {
+          this.dao.addUserTx({
+            email: currentUser.email,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+            uid: currentUser.uid
+          });
+          
+          return true;
+        }
+      },
       'signInOptions': [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID
       ]

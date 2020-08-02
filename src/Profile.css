@@ -1,17 +1,17 @@
-  
-.profile_img_wrap{
-  text-align: right;
+.profile-img-wrap{
+  text-align: left;
   border-radius: 50%;
   display: inline;
-  float: right;
+  float:left;
 }
-.profile_img{
+.profile-img{
   border-radius: 50%;
   height: 35px;
-  padding: 5px;
+  padding: 10px;
+  margin-left: 10px;
 }
-.profile_name{
-  padding-right: 10px;
-  float: right;
+.profile-name{
+  padding-left: 10px;
+  float: left;
   margin-top: 17px;
 }

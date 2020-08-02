@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import logo from './img/stand_up_logo.png';
 import './Home.css';
-import Editor from './Editor';
+import Buttons from './Buttons';
 import CardList from './CardList'
-import { updateArticle } from './actions/Article'
+
 
 class Home extends Component {
   constructor(){
     super();
-    this.submit = this.submit.bind(this);
   }
-  submit(article){
-    if (article) {
-      const { dispatch } = this.props;
-      dispatch(updateArticle(article));
-      this.forceUpdate();
-    }
-  }
+  
   render() {
-    return (    
-      <div className="App">
-        <div className="App-header">
-          <Link to="/standup">
-            <img src={logo} className="App-logo" alt="logo" />
-          </Link>
-        </div>
-        <Editor submit={ this.submit }/>
+    const groupName = 'test_group';
+    // const groupName = this.props.params.groupName;
+    // const headerClass = 'app-header';
+    // const headerStyle = {
+    //   backgroundImage: 'url(' +logo+ ')'
+    // }
+    return (
+          
+      <div className="app">
+        <div className="app-header" 
+          style={ { backgroundImage: 'url(' +logo+ ')', height: '45px' } } />     
+        <Buttons groupName={ groupName } />
+        {/* <Editor submit={ this.submit }/> */}
         <CardList cardInfo={ this.cardInfo } />
       </div>
     );

@@ -1,12 +1,10 @@
 import firebase from 'firebase';
-import firebaseui from 'firebaseui';
 import {USER, GROUP} from '../constants'
 
-export default function getArticles(state, action){
+export default function getArticles(state, action) {
+  // console.log('dispatch getArticles', state, action.type);
 
-  console.log('dispatch getArticles', state, action.type);
-
-  if(action.type === USER){
+  if (action.type === USER) {
     let articles_of_mine = [];
     let cUser = firebase.auth().currentUser;
     state.articles.forEach((article) => {
@@ -14,11 +12,11 @@ export default function getArticles(state, action){
         articles_of_mine.push(article);
       }
     });
+
     return Object.assign({}, state, { articles: articles_of_mine });
+  } else if (action.type === GROUP) {
+    return Object.assign({}, state,action);
   }
-  else if(action.type === GROUP){
-    //some code would be here
-    return Object.assign({},state,action);
-  }
-  return Object.assign({},state,action);
+
+  return Object.assign({}, state,action);
 }

@@ -3,15 +3,15 @@ import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 import FirebaseDao from '../FirebaseDao'
 import config from '../config'
+
 const dao = new FirebaseDao(config);
+
 export function userArticles() {
   return {
     type: USER
   }
 }
-/*
-* 여기부터
-*/
+
 export function getArticles(articles) {
   const items = [];
   articles.forEach((article) => {
@@ -20,7 +20,7 @@ export function getArticles(articles) {
     items.push(item);
   });
   
-  console.log('action getArticles', items);
+  // console.log('action getArticles', items);
 
   if (items && items.length > 0){
     return {
@@ -31,9 +31,7 @@ export function getArticles(articles) {
 }
 
 export function loadArticles() {
-  
-  console.log('action loadArticles');
-  
+  // console.log('action loadArticles');
   return (dispatch) => {
     dao.list(25, (articles) => dispatch(getArticles(articles)));
   };

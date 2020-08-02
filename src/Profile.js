@@ -32,12 +32,10 @@ class Profile extends Component {
     if (user) {
       return (
         <span>
-          <div className="profile_name">
-            <a href="#" onClick={ () => this.popProfile() }>{ user.displayName }</a>
-          </div>
-          
-          <div className="profile_img_wrap">
-            <img src={ user.photoURL } alt="profiles" className="profile_img"/>
+          <div className="profile-img-wrap">
+            <a href="#" onClick={ (e) => this.popProfile(e) }>
+              <img src={ user.photoURL } alt="profiles" className="profile-img"/>
+            </a>
           </div>
           
           <PopCard isPop={ this.state.isPop }/>
