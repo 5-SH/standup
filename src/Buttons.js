@@ -9,7 +9,6 @@ import { updateArticle } from './actions/Article';
 class Buttons extends Component {
   constructor() {
     super();
-    this.submit = this.submit.bind(this);
   }
   
   selectButton(args) {
@@ -17,14 +16,6 @@ class Buttons extends Component {
     dispatch(selectButton(args));
   }
   
-  submit(article){
-    if (article) {
-      const { dispatch } = this.props;
-      dispatch(updateArticle(article));
-      this.forceUpdate();
-    }
-  }
-
   renderActionBar(selected) {
     switch(selected) {
       case 'groups':

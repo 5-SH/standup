@@ -25,10 +25,8 @@ class CardList extends Component {
   }
 }
 export default connect(
-  (state)=>{
-    
-    console.log('CardList get state', state);
-
+  state => {
+    // console.log('CardList get state', state);
     return { articles: state.default.articles };
   }
 )(CardList);

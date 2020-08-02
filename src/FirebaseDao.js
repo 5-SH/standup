@@ -48,16 +48,53 @@ export default class FirebaseDao {
     return firebase.database().ref().child('posts').push(postData);
   }
   
-  update(key, postData) {
-    const updates = {};
-    updates['/posts/' + key] = postData;
-    // updates['/user-posts/genji/' + key] = postData;
-    return firebase.database().ref().update(updates);
+  checkGroupExists(groupName) {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('/groups').on('value', snapshot => {
+        const groups = snapshot.val();
+        let isReal = false;
+        
+        
+        for (const key in groups){
+          console.log('checkGroupExists 1', groups, groupName);
+          if (groups[key].name === groupName) {
+            isReal = true;
+            
+            console.log('checkGroupExists', key, groups[key]);
+            
+            resolve(groups[key]);
+          }
+        }
+        if (!isReal) reject();
+      });
+    });
+  }
+  
+  update(key, postData){
+    return new Promise((resolve, reject) => {
+      this.checkGroupExists(postData.groupName).then(group => {
+        const groupKey = group ? group.key : undefined;
+        const uid = this.currentUser.uid;
+        const updates = {};
+        postData.key = key;
+
+        console.log('update', key);
+
+        updates['/group-posts/' + groupKey + "/"+ key] = postData;
+        updates['/user-posts/' + uid + "/" + key] = postData;
+        const updateRes =  firebase.database().ref().update(updates);
+
+        resolve(updateRes);
+      }).catch(err => {
+        console.log(err);
+        reject(err);
+      })
+    });
   }
   
   remove(key) {
     return new Promise(resolve => {
-      firebase.database().ref('/posts/').child(key).remove();
+      firebase.database().ref('/group-posts/').child(key).remove();
       firebase.database().ref('/user-posts/' + this.currentUser().email).child(key).remove();
       resolve(key);
     });
@@ -86,7 +123,7 @@ export default class FirebaseDao {
   getArticle(key) {
     return new Promise(resolve => {
       firebase.database().ref('/posts/'+key)
-              .on('value',(articles)=>{
+              .on('value', articles => {
                 resolve(articles);
               })
     });
@@ -113,9 +150,9 @@ export default class FirebaseDao {
   }
 
   addUser(user){
-    let update ={};
+    const update ={};
     update['/users/' + user.uid] = user;
-    
+
     return firebase.database().ref().update(update);
   }
 
@@ -153,6 +190,29 @@ export default class FirebaseDao {
         reject(err) ;
       });
     });
+  }
+
+  listGroupArticle(group){
+    return new Promise((resolve,reject) => {
+      this.getGroup(group).once('value', snapshot => {
+        const sn = snapshot.val();
+        if (sn && sn.key) {
+          firebase.database().ref('/group-posts/' + sn.key).on('value', snapshot => {
+            resolve(snapshot.val());
+          });
+        } else {
+          reject(new Error('no group'));
+        }
+      })
+    });
+  }
+
+  get groupList(){
+    return firebase.database().ref('/groups');
+  }
+
+  getGroup(name){
+    return firebase.database().ref('/groups/'+name);
   }
 
 }

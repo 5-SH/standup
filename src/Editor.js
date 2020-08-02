@@ -4,6 +4,9 @@ import firebase from 'firebase';
 import Profile from './Profile';
 import getEmbedly from './Embedly';
 import Card from './Card';
+import { connect } from 'react-redux'
+import { updateArticle } from './actions/Article'
+import { groupSelect } from './actions/Group'
 
 class Editor extends Component {
   constructor(props) {
@@ -47,10 +50,19 @@ class Editor extends Component {
       }
     })
   }
-  handleSubmit(event){
+  handleSubmit(event) {
+    event.preventDefault();
+
     if (this.hasValue(this.state.content)) {
-      event.preventDefault();
-      this.props.submit(this.getArticle());
+      const article = this.getArticle();
+
+      if (article) {
+        const { dispatch, groupName } = this.props;
+        dispatch(updateArticle({...article, groupName}));
+        // dispatch(groupSelect(groupName))
+        this.forceUpdate();
+      }
+
       this.setState({
         embedlyUrl : undefined,
         content : undefined,
@@ -150,4 +162,7 @@ class Editor extends Component {
   }
 }
 
-export default Editor;
+const mapStateToProps = (state, ownProps ) => {
+  return {groupName: state.default.groupName}
+}
+export default connect(mapStateToProps)(Editor);
