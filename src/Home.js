@@ -12,8 +12,10 @@ class Home extends Component {
   }
   
   render() {
-    const groupName = 'test_group';
-    // const groupName = this.props.params.groupName;
+    // const groupName = 'test_group';
+    const groupName = this.props.groupName || null;
+    console.log('group name', groupName);
+
     // const headerClass = 'app-header';
     // const headerStyle = {
     //   backgroundImage: 'url(' +logo+ ')'
@@ -31,4 +33,8 @@ class Home extends Component {
   }
 }
 
-export default connect()(Home);
+const mapStateToProps = (state, ownProps ) => {
+  return {...state.default, ...ownProps}
+}
+
+export default connect(mapStateToProps)(Home);

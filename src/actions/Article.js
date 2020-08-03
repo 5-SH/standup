@@ -15,26 +15,24 @@ export function userArticles() {
 
 export function getArticles(articles) {
   const items = [];
-  articles.forEach((article) => {
+  
+  articles.forEach(article => {
     const item = article.val();
     item['key'] = article.key;
     items.push(item);
   });
   
-  // console.log('action getArticles', items);
-
-  if (items && items.length > 0){
-    return {
-      type : ALL,
-      articles : items.reverse()
-    }
+  
+  return {
+    type : ALL,
+    articles : items.reverse()
   }
 }
 
 export function loadArticles() {
   // console.log('action loadArticles');
-  return (dispatch) => {
-    dao.list(25, (articles) => dispatch(getArticles(articles)));
+  return dispatch => {
+    dao.list(25, articles => dispatch(getArticles(articles)));
   };
 }
 export function updateArticle(postData){

@@ -30,9 +30,9 @@ class GroupAdd extends Component {
   }
 
   submit() {
-    console.log(this.state.groupName,
-      this.state.groupImage,
-      this.state.groupNameUnique);
+    // console.log(this.state.groupName,
+    //   this.state.groupImage,
+    //   this.state.groupNameUnique);
 
     if (this.state.groupNameUnique) {
       if (this.state.groupName && 
@@ -47,13 +47,15 @@ class GroupAdd extends Component {
           }
         }).then(name => {
           // browserHistory.push('/groups/'+ name);
+          alert('그룹이 생성 되었습니다.');
+          this.props.popGroupAdd(false);
         }).catch(e => { console.log(e) });
       }
       else {
-        alert("그룹이름과 이미지를 지정해 주셔야 합니다.");
+        alert('그룹이름과 이미지를 지정해 주셔야 합니다.');
       }
     } else {
-      alert("그룹이름 중복체크를 해주세요.")
+      alert('그룹이름 중복체크를 해주세요.');
     }
   }
 

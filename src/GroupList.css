@@ -1,12 +1,16 @@
 .group-chooser{
-  background-color : hsl(0, 0%, 95%);
-  height: 165px;
+  background-color : #F2F2F2;
+  height: 355px;
   border-top: 1px solid #CCC;
   /*border-bottom: 1px solid #CCC;*/
   width:100%;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
+.slick-slider {
+  height: 320px;
+}
+
 .slick-prev {
   left: 25px;
 }
@@ -23,7 +27,7 @@
   bottom:0px;
   left: 2px;
   position: relative;
-  float: center;
-  width: 90px;
+  float: left;
+  width: 70px;
   height:20px;
 }

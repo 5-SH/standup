@@ -4,7 +4,7 @@ import Editor from "./Editor";
 import GroupList from './GroupList';
 import Profile from './Profile';
 import { selectButton } from './actions/Button';
-import { updateArticle } from './actions/Article';
+import './Buttons.css';
 
 class Buttons extends Component {
   constructor() {
@@ -51,18 +51,18 @@ class Buttons extends Component {
           </a>
         </div>
         {this.renderActionBar(selectedButton)}
-        {/* { groupName && !selectedButton &&
-          <div style={ { width:'100%',height:150,position:'relative' } }>
-            <img src={ logoUrl } alt={ groupName } style={ { width:'100%',height:150 } }/>
+        { groupName && !selectedButton &&
+          <div style={ { width: '100%', height: "355px", position: 'relative' } }>
+            <img src={ logoUrl } alt={ groupName } style={ { width:'100%', height: "355px" } }/>
             <div className="style_title" style={ { width:"100%" } }>{ groupName }</div>
           </div>
-        } */}
+        }
       </div>
     )
   }
 }
 
-let mapStateToProps = (state, ownProps ) => {
+const mapStateToProps = (state, ownProps ) => {
   return {...state.default, ...ownProps}
 }
 

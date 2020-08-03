@@ -1,11 +1,11 @@
 .group-add{
-  position: relative;
+  /* position: relative; */
   top:-125px;
   background-color: white;
-  height: 155px;
+  height: 85px;
   left:5px;
   color : #AAA;
-  margin-top: 130px;
+  /* margin-top: 130px; */
 }
 .drop-file{
   margin-top: 5px;

@@ -114,7 +114,8 @@ export default class FirebaseDao {
     // return new Promise(resolve=>{
       firebase.database().ref('posts')
               .orderByKey().limitToLast(pagesize)
-              .on('value',(articles) => {
+              .on('value', articles => {
+                console.log('articles', articles);
                 callback(articles);
               })
     // });
@@ -159,8 +160,6 @@ export default class FirebaseDao {
   addGroup(postData) {
     const owner = postData.owner;
     
-    console.log('!!!', postData);
-
     return new Promise((resolve, reject) => {
       _getUserKeyFromEmail(owner.email).then(user => {
         try {

@@ -9,11 +9,9 @@ import 'slick-carousel';
 
 const dao = new FirebaseDao(config);
 
-// RenderGroupCardList Component
-class RenderGroupCardList extends  Component{
+class RenderGroupCardList extends Component{
   constructor(props){
     super(props);
-    this.groupDOMs = [];
     this.settings = {
       dots: true,
       infinite: true,
@@ -21,21 +19,38 @@ class RenderGroupCardList extends  Component{
       slidesToShow: 1,
       slidesToScroll: 1
     };
+    this.state = {
+      groupDOMs: [],
+    }
   }
-  componentWillMount(){
+  createNewDOMs() {
+    const newDOMs = [];
     for (const title in this.props.groups) {
-      if(this.props.groups.hasOwnProperty(title))
-        this.groupDOMs.push(
+      if (this.props.groups.hasOwnProperty(title))
+        newDOMs.push(
           <div key={title}>
             <GroupCard imageUrl={this.props.groups[title]["logoUrl"]}
                        title={title} />
           </div>);
     }
+    return newDOMs;
+  }
+  componentWillMount(){
+    this.setState({
+      groupDOMs: [...this.createNewDOMs()]
+    })
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.groups !== prevProps.groups) {
+      this.setState({
+        groupDOMs: [...this.createNewDOMs()]
+      })
+    }
   }
   render(){
     return (
       <Slider {...this.settings}>
-        {this.groupDOMs}
+        {this.state.groupDOMs}
       </Slider>
     );
   }
@@ -51,7 +66,8 @@ class GroupList extends Component {
     }
   }
   componentWillMount(){
-    dao.groupList.on('value',(snapshot)=> {
+    dao.groupList.on('value', snapshot => {
+      console.log('grouplist value', {...snapshot.val()});
       this.setState({
         groups: {...snapshot.val()},
         isLoaded: true
@@ -62,19 +78,23 @@ class GroupList extends Component {
     this.setState({ isPop });
   }
   // componentWillMount()
-
+  renderGroupAdd() {
+    if (this.state.isPop) {
+      return <GroupAdd popGroupAdd={ (isPop) => this.popGroupAdd(isPop) } />;
+    }
+  }
   render() {
     return (
-      <div className="group-chooser">
-        {this.state.isLoaded &&
-          <RenderGroupCardList groups={this.state.groups}/>
-        }
-        <button onClick={ () => this.popGroupAdd(true) } className="groupAddBtn">
-          <i className="fa fa-plus-circle">새 그룹</i>
-        </button>
-        {this.state.isPop &&
-          <GroupAdd popGroupAdd={ (isPop) => this.popGroupAdd(isPop) } />
-        }
+      <div>
+        <div className="group-chooser">
+          {this.state.isLoaded &&
+            <RenderGroupCardList groups={this.state.groups}/>
+          }
+          <button onClick={ () => this.popGroupAdd(true) } className="groupAddBtn">
+            <i className="fa fa-plus-circle">새 그룹</i>
+          </button>
+        </div>
+        {this.renderGroupAdd()}
       </div>
     )
   }
